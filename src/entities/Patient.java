@@ -3,14 +3,14 @@ package entities;
 public class Patient {
     
     private int age, systolicBP, diastolicBP, heartRaate, riskLevel;
-    private float BS, bodyTemp;
+    private double BS, bodyTemp;
     
     //Constructor start
     public Patient() {
 	
     }
     
-    public Patient(int age, int systolicBP, int diastolicBP, int heartRaate, int riskLevel, float bS, float bodyTemp) {
+    public Patient(int age, int systolicBP, int diastolicBP, int heartRaate, int riskLevel, double bS, double bodyTemp) {
 	super();
 	this.age = age;
 	this.systolicBP = systolicBP;
@@ -62,19 +62,19 @@ public class Patient {
         this.riskLevel = riskLevel;
     }
 
-    public float getBS() {
+    public double getBS() {
         return BS;
     }
 
-    public void setBS(float bS) {
+    public void setBS(double bS) {
         BS = bS;
     }
 
-    public float getBodyTemp() {
+    public double getBodyTemp() {
         return bodyTemp;
     }
 
-    public void setBodyTemp(float bodyTemp) {
+    public void setBodyTemp(double bodyTemp) {
         this.bodyTemp = bodyTemp;
     }//Getters and Setters end
     

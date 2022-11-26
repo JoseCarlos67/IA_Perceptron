@@ -1,7 +1,11 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import entities.NeuralNetwork;
+import entities.Patient;
 import entities.ReaderCSV;
 
 public class Program {
@@ -10,10 +14,17 @@ public class Program {
 
 	Locale.setDefault(Locale.US);
 
+	List<Patient> list = new ArrayList<>();
+	List<Patient> training = new ArrayList<>();
+
 	ReaderCSV rd = new ReaderCSV();
-	rd.readFile();
-	rd.informations();
+	rd.readFile(list);
+	rd.informations(list);
 	
+	NeuralNetwork nw = new NeuralNetwork();
+	nw.generateTrainingList(list, training);
+	System.out.println("Tamanho da Lista de Treinamento: " + training.size());
+
     }
 
 }

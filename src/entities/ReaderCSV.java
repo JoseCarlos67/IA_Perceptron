@@ -4,16 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderCSV {
 
     String path = "C:\\Users\\Carlos\\eclipse-workspace\\IA_Perceptron\\src\\file\\Maternal Health Risk Data Set.csv";
     File srcFile = new File(path);
-    List<Patient> list = new ArrayList<>();
 
-    public void readFile() {
+    public void readFile(List<Patient> list) {
 
 	// Pega o caminha do arquivo alvo.
 	String srcFolder = srcFile.getParent();
@@ -54,9 +52,9 @@ public class ReaderCSV {
 
 	}
 
-    }//readFile end
+    }// readFile end
 
-    public void informations() {//NÃO NECESSÁRIO
+    public void informations(List<Patient> list) {// NÃO NECESSÁRIO
 
 	for (Patient pt : list) {
 	    System.out.println(pt.getBodyTemp() + " --- " + pt.getRiskLevel());
@@ -64,6 +62,6 @@ public class ReaderCSV {
 
 	System.out.println("Tamanho da lista: " + list.size());
 
-    }//
+    }
 
 }
