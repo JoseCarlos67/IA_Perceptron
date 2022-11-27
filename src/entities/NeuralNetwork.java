@@ -9,12 +9,13 @@ public class NeuralNetwork {
     private List<Patient> list = new ArrayList<>();
     private List<Patient> training = new ArrayList<>();
     private double w[] = new double[6];
-    private double y = 0;
+    private int y = 0;
     private double bias = 0;
     private double wBias;
     private double u = 0;
-    private int epocas = 0;
+    private int epoch = 0;
     private int i = 0;
+    private double n = 0.005;
 
     public NeuralNetwork(List<Patient> list, List<Patient> training) {
 	super();
@@ -51,22 +52,25 @@ public class NeuralNetwork {
     }
 
     public void teste() {
-	
-	for(Patient pt: training) {
+
+	for (Patient pt : training) {
 	    System.out.println("Age: " + pt.getAge() + " Systolic: " + pt.getSystolicBP());
 	}
-	
+
     }
-    
+
     public void training() {
 	startWeights(w);
-	
-//	for (double w: w) {
-//	    System.out.print(w + " ");
-//	}
-	
-	//for ()
-	
+
+	do {
+	    
+	    for (int i = 0; i < training.size(); i++) {
+		activationPotential(u, i, training, w);
+		activationFunction(u, y);
+	    }
+	    
+	} while(epoch == 100);
+
     }
 
     private static void startWeights(double[] w) {
@@ -79,9 +83,29 @@ public class NeuralNetwork {
 
     }
 
-    public void activationPotential() {
+    public static void activationPotential(double u, int i, List<Patient> training, double[] w) {//Potencial de ativação
 	u = w[0] * training.get(i).getAge() + w[1] * training.get(i).getSystolicBP()
 		+ w[2] * training.get(i).getDiastolicBP() + w[3] * training.get(i).getBS()
-		+ w[4] * training.get(i).getBodyTemp() + w[5] * training.get(i).getHeartRaate(); 
+		+ w[4] * training.get(i).getBodyTemp() + w[5] * training.get(i).getHeartRaate();
+    }
+
+    public static void activationFunction(double u, int y) {//Degrau Bipolar
+	if (u > 0)
+	    y = 1;
+	else if(u == 0)
+	    y = 0;
+	else
+	    y = -1;
+    }
+    
+    public static void recalculatingWeights(double[] w, double n, int y, int i, List<Patient> training) {
+
+	    w[0] = w[0] + n * (training.get(i).getRiskLevel() - y) * training.get(i).getAge();
+	    w[1] = w[1] + n * (training.get(i).getRiskLevel() - y) * training.get(i).getSystolicBP();
+	    w[2] = w[2] + n * (training.get(i).getRiskLevel() - y) * training.get(i).getDiastolicBP();
+	    w[3] = w[3] + n * (training.get(i).getRiskLevel() - y) * training.get(i).getBS();
+	    w[4] = w[4] + n * (training.get(i).getRiskLevel() - y) * training.get(i).getBodyTemp();
+	    w[5] = w[5] + n * (training.get(i).getRiskLevel() - y) * training.get(i).getHeartRaate();
+	
     }
 }
