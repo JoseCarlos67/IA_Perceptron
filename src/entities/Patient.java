@@ -2,7 +2,7 @@ package entities;
 
 public class Patient {
     
-    private int age, systolicBP, diastolicBP, heartRaate, riskLevel;
+    private int age, systolicBP, diastolicBP, heartRaate, riskLevel, bias;
     private double BS, bodyTemp;
     
     //Constructor start
@@ -76,6 +76,16 @@ public class Patient {
 
     public void setBodyTemp(double bodyTemp) {
         this.bodyTemp = bodyTemp;
-    }//Getters and Setters end
+    }
+
+    public int getBias() {
+        return bias;
+    }
+
+    public void setBias(int bias) {
+        this.bias = bias;
+    }
+    
+    //Getters and Setters end
     
 }

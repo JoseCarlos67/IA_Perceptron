@@ -25,8 +25,6 @@ public class Program {
 	nw.generateTrainingList(list, training);
 	System.out.println("Tamanho da Lista de Treinamento: " + training.size());
 	System.out.println();
-	nw.teste();
-	nw.activationPotential();
 	nw.training();
     }
 
