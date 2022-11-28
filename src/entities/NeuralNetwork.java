@@ -47,11 +47,16 @@ public class NeuralNetwork {
 
 			}
 		}
+		System.out.println("Age, SystolicBP, DiastolicBP, BS,BodyTemp, HeartRate, RiskLevel");
+		for (Patient pt : list) {
+			System.out.println(pt.getAge() + " - " + pt.getSystolicBP() + " - " + pt.getDiastolicBP() + " - " + pt.getBS() + " - " + pt.getBodyTemp() + " - " +
+		pt.getHeartRaate() + " - " + pt.getRiskLevel());
+		}
 
 	}
 
 	public void training() {
-		boolean erroI = false;
+//		boolean erroI = false;
 		
 		startWeights(w);
 		
