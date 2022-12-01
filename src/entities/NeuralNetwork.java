@@ -40,8 +40,8 @@ public class NeuralNetwork {
 	do {
 
 	    for (int i = 0; i < training.size(); i++) {
-
-		u = activationPotential(i, bias, training, w);
+		
+		u = (activationPotential(i, bias, training, w));
 
 		if (i < 150) {
 		    System.out.println("Alto Risco: " + u);
@@ -63,11 +63,13 @@ public class NeuralNetwork {
 		    erro++;
 		    recalculatingWeights(w, n, y, i, bias, training);
 //		    erroI = false;
+		    u = 0;
 		} else {
 		    acerto++;
 //		    erroI = true;
+		    u = 0;
 		}
-
+		
 	    }
 	    
 	    epoch++;

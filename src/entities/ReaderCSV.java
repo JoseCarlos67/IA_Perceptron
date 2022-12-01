@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 public class ReaderCSV {
 
@@ -56,43 +57,54 @@ public class ReaderCSV {
 
     public void generateTrainingList(List<Patient> list, List<Patient> training) {
 
+	boolean aux = false;
 	int low = 0, mid = 0, high = 0;
+	Random rd = new Random();
+	
+	while (aux == false) {
 
-	for (Patient pat : list) {
+	    int value = rd.nextInt(list.size());
 
-	    if (pat.getRiskLevel() == -1) {
+	    if (list.get(value).getRiskLevel() == -1) {
 		if (low < 150) {
-		    training.add(pat);
+		    training.add(list.get(value));
+		    list.remove(value);
 		    low++;
 		}
-	    }
-	    if (pat.getRiskLevel() == 0) {
+	    } else if (list.get(value).getRiskLevel() == 0) {
 		if (mid < 150) {
-		    training.add(pat);
+		    training.add(list.get(value));
+		    list.remove(value);
 		    mid++;
 		}
-	    }
-	    if (pat.getRiskLevel() == 1) {
+	    } else {
 		if (high < 150) {
-		    training.add(pat);
+		    training.add(list.get(value));
+		    list.remove(value);
 		    high++;
 		}
 
 	    }
+	    
+	    if ( high == 150 && mid == 150 && low == 150) {
+		aux = true;
+	    }
+
 	}
-	System.out.println("Age, SystolicBP, DiastolicBP, BS,BodyTemp, HeartRate, RiskLevel");
-	for (Patient pt : list) {
-	    System.out.println(pt.getAge() + " - " + pt.getSystolicBP() + " - " + pt.getDiastolicBP() + " - "
-		    + pt.getBS() + " - " + pt.getBodyTemp() + " - " + pt.getHeartRaate() + " - " + pt.getRiskLevel());
-	}
+
+//	System.out.println("Age, SystolicBP, DiastolicBP, BS,BodyTemp, HeartRate, RiskLevel");
+//	for (Patient pt : list) {
+//	    System.out.println(pt.getAge() + " - " + pt.getSystolicBP() + " - " + pt.getDiastolicBP() + " - "
+//		    + pt.getBS() + " - " + pt.getBodyTemp() + " - " + pt.getHeartRaate() + " - " + pt.getRiskLevel());
+//	}
 
     }
 
     public void informations(List<Patient> list) {// NÃO NECESSÁRIO
 
-	for (Patient pt : list) {
-	    System.out.println(pt.getBodyTemp() + " --- " + pt.getRiskLevel());
-	}
+//	for (Patient pt : list) {
+//	    System.out.println(pt.getBodyTemp() + " --- " + pt.getRiskLevel());
+//	}
 
 	System.out.println("Tamanho da lista: " + list.size());
 

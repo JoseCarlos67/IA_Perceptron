@@ -20,7 +20,7 @@ public class Program {
 	ReaderCSV rd = new ReaderCSV();
 	rd.readFile(list);
 	rd.generateTrainingList(list, training);
-//	rd.informations(list);
+        rd.informations(list);
 
 	NeuralNetwork nw = new NeuralNetwork(list, training);
 	
