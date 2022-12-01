@@ -15,9 +15,11 @@ public class NeuralNetwork {
     private double n = 0.05;
 
     public NeuralNetwork(List<Patient> list, List<Patient> training) {
+	
 	super();
 	this.list = list;
 	this.training = training;
+	
     }
 
     public void training() {
@@ -25,6 +27,7 @@ public class NeuralNetwork {
 
 	startWeights(w);
 	double u = 0;
+	
 	System.out.print("Pessos: ");
 	for (int j = 0; j < w.length; j++) {
 	    System.out.print(w[j] + " ");
@@ -33,24 +36,27 @@ public class NeuralNetwork {
 	int acerto = 0, erro = 0, cA = 0, cB = 0, cM = 0;
 
 	System.out.println("\n\nValor de u: \n");
+	
 	do {
 
-	    for (int i = 151; i < 301; i++) {
+	    for (int i = 0; i < training.size(); i++) {
 
 		u = activationPotential(i, bias, training, w);
 
-		if (i <= 150) {
+		if (i < 150) {
 		    System.out.println("Alto Risco: " + u);
 		    cA++;
 
-		} else if (i > 150 && i <= 300) {
+		} else if (i >= 150 && i < 300) {
 		    System.out.println("Baixo Risco: " + u);
 		    cB++;
 		} else {
 		    System.out.println("Médio risco: " + u);
 		    cM++;
 		}
-		// System.out.println("B = " + cB + " M = " + cM + " A = " + cA);
+//		
+//		System.out.println("B = " + cB + " M = " + cM + " A = " + cA);
+		
 		y = activationFunction(u, y);
 		int d = training.get(i).getRiskLevel();
 		if (d != y) {
@@ -63,6 +69,7 @@ public class NeuralNetwork {
 		}
 
 	    }
+	    
 	    epoch++;
 
 	} while (epoch == 1000);
@@ -71,30 +78,32 @@ public class NeuralNetwork {
 	System.out.println("Acerto: " + acerto);
 	System.out.println("Erro: " + erro);
 	System.out.println();
+	
+	System.out.println("Pesos: ");
 	for (int j = 0; j < w.length; j++) {
+	    
 	    System.out.print(w[j] + " ");
+	    
 	}
 
     }
 
+    
+    //Funções
+    
     private static void startWeights(double[] w) {
 
 	Random rand = new Random();
 
 	for (int i = 0; i < w.length; i++) {
-//	    w[i] = rand.nextDouble(0, 1);
-	    w[i] = rand.nextDouble(1);
-	    if (i % 2 == 0) {
-		w[i] *= -1;
-	    }
+	    w[i] = rand.nextDouble(-1, 1);
 	}
 
     }
 
-    public static double activationPotential(int i, int bias, List<Patient> training, double[] w) {// Potencial
-												   // de
-												   // ativação
-	return w[0] * bias + w[1] * training.get(i).getAge() + w[2] * training.get(i).getSystolicBP()
+    public static double activationPotential(int i, int bias, List<Patient> training, double[] w) {// Potencial de ativação
+	double aux = 0;
+	return aux = w[0] * bias + w[1] * training.get(i).getAge() + w[2] * training.get(i).getSystolicBP()
 		+ w[3] * training.get(i).getDiastolicBP() + w[4] * training.get(i).getBS()
 		+ w[5] * training.get(i).getBodyTemp() + w[6] * training.get(i).getHeartRaate();
     }
