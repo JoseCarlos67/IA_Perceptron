@@ -12,87 +12,106 @@ public class NeuralNetwork {
     private int y = 0;
     private int bias = -1;
     private int epoch = 0;
-    private double n = 0.05;
+    private double n = 0.01;
 
     public NeuralNetwork(List<Patient> list, List<Patient> training) {
-	
+
 	super();
 	this.list = list;
 	this.training = training;
-	
+
     }
 
     public void training() {
-//	boolean erroI = false;
 
 	startWeights(w);
 	double u = 0;
-	
-	System.out.print("Pessos: ");
-	for (int j = 0; j < w.length; j++) {
-	    System.out.print(w[j] + " ");
-	}
 
-	int acerto = 0, erro = 0, cA = 0, cB = 0, cM = 0;
+//	System.out.print("Pessos: ");
+//	for (int j = 0; j < w.length; j++) {
+//	    System.out.print(w[j] + " ");
+//	}
 
-	System.out.println("\n\nValor de u: \n");
-	
+
+//	System.out.println("\n\nValor de u: \n");
+
 	do {
 
 	    for (int i = 0; i < training.size(); i++) {
-		
-		u = (activationPotential(i, bias, training, w));
 
-		if (i < 150) {
-		    System.out.println("Alto Risco: " + u);
-		    cA++;
+		u = 100 / (activationPotential(i, bias, training, w));
 
-		} else if (i >= 150 && i < 300) {
-		    System.out.println("Baixo Risco: " + u);
-		    cB++;
-		} else {
-		    System.out.println("Médio risco: " + u);
-		    cM++;
-		}
-//		
-//		System.out.println("B = " + cB + " M = " + cM + " A = " + cA);
-		
-		y = activationFunction(u, y);
+//		System.out.println(u + " --- " + training.get(i).getRiskLevel());
+
+		y = activationFunction(u);
 		int d = training.get(i).getRiskLevel();
 		if (d != y) {
-		    erro++;
 		    recalculatingWeights(w, n, y, i, bias, training);
-//		    erroI = false;
 		    u = 0;
 		} else {
-		    acerto++;
-//		    erroI = true;
 		    u = 0;
 		}
-		
+
 	    }
-	    
+
 	    epoch++;
 
-	} while (epoch == 1000);
+	} while (epoch != 1000);
 
-	System.out.println();
-	System.out.println("Acerto: " + acerto);
-	System.out.println("Erro: " + erro);
-	System.out.println();
-	
-	System.out.println("Pesos: ");
-	for (int j = 0; j < w.length; j++) {
-	    
-	    System.out.print(w[j] + " ");
-	    
-	}
+//	System.out.println();
+//	System.out.println("Acerto: " + acerto);
+//	System.out.println("Erro: " + erro);
+//	System.out.println();
+//
+//	System.out.println("Pesos: ");
+//	for (int j = 0; j < w.length; j++) {
+//
+//	    System.out.print(w[j] + " ");
+
+//	}
 
     }
 
-    
-    //Funções
-    
+    public void operationPhase() {
+
+	int mis = 0, hit = 0;
+
+	for (int i = 0; i < list.size(); i++) {
+
+	    double u = 100 / (activationPotential(i, bias, list, w));
+
+	    int y = activationFunction(u);
+
+	    int d = list.get(i).getRiskLevel();
+
+	    if (d != y) {
+
+		mis++;
+		recalculatingWeights(w, n, y, i, bias, list);
+		u = 0;
+
+	    } else {
+
+		hit++;
+		u = 0;
+
+	    }
+
+	}
+
+	double accuracyH = (double)(hit * 100) / list.size();
+	double accuracyM = (double)(mis * 100) / list.size();
+
+	System.out.println("Seasons for training = " + epoch);
+	System.out.println("Accuracy of hit = " + accuracyH);
+	System.out.println("Accuracy of mis = " + accuracyM);
+	System.out.println(hit);
+	System.out.println(mis);
+
+    }
+
+    // Funções
+
     private static void startWeights(double[] w) {
 
 	Random rand = new Random();
@@ -103,17 +122,18 @@ public class NeuralNetwork {
 
     }
 
-    public static double activationPotential(int i, int bias, List<Patient> training, double[] w) {// Potencial de ativação
+    public static double activationPotential(int i, int bias, List<Patient> training, double[] w) {// Potencial de
+												   // ativação
 	double aux = 0;
 	return aux = w[0] * bias + w[1] * training.get(i).getAge() + w[2] * training.get(i).getSystolicBP()
 		+ w[3] * training.get(i).getDiastolicBP() + w[4] * training.get(i).getBS()
 		+ w[5] * training.get(i).getBodyTemp() + w[6] * training.get(i).getHeartRaate();
     }
 
-    public static int activationFunction(double u, int y) {// Degrau Bipolar
-	if (u < 300)
+    public static int activationFunction(double u) {// Degrau Bipolar
+	if (u >= 0)
 	    return 1;
-	else if (u > 000)
+	else if (u < 0.009)
 	    return -1;
 	else
 	    return 0;

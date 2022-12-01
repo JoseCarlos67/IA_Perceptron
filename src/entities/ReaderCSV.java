@@ -60,7 +60,7 @@ public class ReaderCSV {
 	boolean aux = false;
 	int low = 0, mid = 0, high = 0;
 	Random rd = new Random();
-	
+
 	while (aux == false) {
 
 	    int value = rd.nextInt(list.size());
@@ -85,28 +85,30 @@ public class ReaderCSV {
 		}
 
 	    }
-	    
-	    if ( high == 150 && mid == 150 && low == 150) {
+
+	    if (high == 150 && mid == 150 && low == 150) {
 		aux = true;
 	    }
 
 	}
 
 //	System.out.println("Age, SystolicBP, DiastolicBP, BS,BodyTemp, HeartRate, RiskLevel");
-//	for (Patient pt : list) {
+//	for (Patient pt : training) {
 //	    System.out.println(pt.getAge() + " - " + pt.getSystolicBP() + " - " + pt.getDiastolicBP() + " - "
 //		    + pt.getBS() + " - " + pt.getBodyTemp() + " - " + pt.getHeartRaate() + " - " + pt.getRiskLevel());
 //	}
 
     }
 
-    public void informations(List<Patient> list) {// NÃO NECESSÁRIO
+    public void informations(List<Patient> list, List<Patient> training) {// NÃO NECESSÁRIO
 
 //	for (Patient pt : list) {
 //	    System.out.println(pt.getBodyTemp() + " --- " + pt.getRiskLevel());
 //	}
 
-	System.out.println("Tamanho da lista: " + list.size());
+	System.out.println("\nTamanho da lista: " + list.size());
+	System.out.println("Tamanho da Lista de Treinamento: " + training.size());
+	System.out.println();
 
     }
 
